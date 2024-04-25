@@ -10,7 +10,7 @@ class UserDetails extends Header_page {
 	 
 	public function index()
 	{
-		if($this->headerMenu(4))
+		if($this->headerMenu(2))
 		{
 			//$data['location'] =	$this->UserModel->loadArea();
 			//$data['subLocation'] =	$this->UserModel->loadSubArea("");
@@ -82,7 +82,7 @@ class UserDetails extends Header_page {
 		}
 		else
 		{
-			$this->form_validation->set_rules('txtEmpNo', 'User Name', 'required|is_unique[ceb_system_users.system_user_name]');
+			$this->form_validation->set_rules('txtEmpNo', 'User Name', 'required|is_unique[system_users.system_user_name]');
 		}
 		
 		$this->form_validation->set_rules('txtFullName', ' Full Name', 'required');
@@ -92,12 +92,12 @@ class UserDetails extends Header_page {
 		
 		if ($this->form_validation->run() == FALSE)
 		{
-			if($this->headerMenu(4))
+			if($this->headerMenu(2))
 			{
 				//$data['location'] =	$this->UserModel->loadArea();
 				//$data['subLocation'] =	$this->UserModel->loadSubArea($cmbLocationCode);
 				$data['pages'] =	$this->UserModel->getPages();
-       			$this->load->view('masterData/UserVie',$data);
+       			$this->load->view('masterData/UserView',$data);
 				$this->footerMenu();
 			}
 			else
@@ -105,7 +105,7 @@ class UserDetails extends Header_page {
 		}
 		else
 		{
-			if($this->headerMenu(4))
+			if($this->headerMenu(2))
 			{
 				$userName	=	$this->input->post("txtEmpNo", TRUE);
 				//$userName	=	$this->input->post("txtUserName", TRUE);

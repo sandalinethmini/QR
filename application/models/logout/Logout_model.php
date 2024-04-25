@@ -18,7 +18,7 @@ class Logout_model extends CI_Model
 				
 			$this->db->select('log_id');
 			$where_array 	= array('log_session_id' => $session_id, 'log_user_id' => $user_id, 'log_ip' => $ip_address);
-			$query			=	$this->db->get_where('ceb_log_catalog',$where_array);
+			$query			=	$this->db->get_where('log_catalog',$where_array);
 			
 			if ($query->num_rows() > 0)
 			{
@@ -29,7 +29,7 @@ class Logout_model extends CI_Model
 			
 			$update_data	=	array('log_logout_time' => $logout_time);
 			$this->db->where('log_id', $log_id);
-			$this->db->update('ceb_log_catalog', $update_data);
+			$this->db->update('log_catalog', $update_data);
 						
 			$this->session->sess_destroy();
 			$this->db->trans_complete();

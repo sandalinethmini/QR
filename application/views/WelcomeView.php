@@ -6,8 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!doctype html>
 <html lang="en">
 
-<!-- Mirrored from bootadmin.net/demo/examples/login by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Aug 2018 09:17:14 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,6 +26,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="card">
                     <div class="card-body">
                         <form class="form-signin" action="<?php echo base_url().'index.php/session/SessionDataCon'?>" method="post">
+                        
+                        
                         	<div class="input-group mb-3">
                                  <?php 
 									if($this->session->flashdata('fail'))
@@ -41,6 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Username" required id="txtUserId" name="txtUserId">
+                                <?php echo form_error('txtEmpNo');  ?>
                             </div>
 
                             <div class="input-group mb-3">
@@ -48,17 +50,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <span class="input-group-text"><i class="fa fa-key"></i></span>
                                 </div>
                                 <input type="password" class="form-control" placeholder="Password" id="txtPassword" name="txtPassword">
+                                <?php echo form_error('txtEmpNo');  ?>
                             </div>
-
-                           
 
                             <div class="row">
                                 
                                 <div class="col pl-2">
-                                    <!--<a class="btn btn-block btn-link" href="#">Forgot Password</a>-->
+                                    
                                 </div>
                                 <div class="col pr-2">
-                                    <button type="submit" class="btn btn-block btn-primary">Login</button>
+                                    <button type="submit" class="btn btn-block btn-info" style="margin-right:2515px;">Login</button>
                                 </div>
                             </div>
                         </form>
@@ -75,8 +76,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 </body>
-
-<!-- Mirrored from bootadmin.net/demo/examples/login by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Aug 2018 09:17:14 GMT -->
 </html>
 
 

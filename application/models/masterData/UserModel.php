@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //include "application/models/common/CommonDataSelection.php";
 class UserModel extends  CI_Model {
 
-	var $table = 'ceb_system_users';
+	var $table = 'system_users';
 	var $column_order = array(null, 'system_user_name','system_user_full_name'/*,'area_description'*/); //set column field database for datatable orderable
 	var $column_search = array('system_user_name','system_user_full_name'/*,'area_description'*/); //set column field database for datatable searchable 
 	var $order = array('system_user_name' => 'asc'); // default order 
@@ -17,7 +17,7 @@ class UserModel extends  CI_Model {
 	public function getPages()
 	{
 		$this->db->select('page_id,page_viewname,page_type');
-		$this->db->from('ceb_page_names');
+		$this->db->from('page_names');
 		$this->db->where('page_status ', 1);
 		//$this->db->order_by('page_type',"ASC");
 		$query=$this->db->get();
@@ -28,7 +28,7 @@ class UserModel extends  CI_Model {
 	public function getPagerDetails($recordId)
 	{
 		$this->db->select('access_page_id');
-		$this->db->from('ceb_access_permission');
+		$this->db->from('access_permission');
 		$this->db->where('access_user_id', $recordId);
 		$query=$this->db->get();
 		
@@ -52,8 +52,8 @@ class UserModel extends  CI_Model {
 							system_user_name,
 							system_user_full_name,
 							system_user_status,');
-		$this->db->from('ceb_system_users');
-		//$this->db->join('ceb_area','area_id = system_user_area_id','inner');
+		$this->db->from('system_users');
+		//$this->db->join('area','area_id = system_user_area_id','inner');
 		$this->db->where('system_user_status<>', 5);
 		
 		$i = 0;
@@ -113,22 +113,22 @@ class UserModel extends  CI_Model {
 		$this->db->trans_begin();
 			$data = array('system_user_full_name' => $fullName/*'system_user_area_id'=>$cmbLocationCode*/);
 			$this->db->where('system_user_id', $userId);
-			$this->db->update('ceb_system_users', $data);
+			$this->db->update('system_users', $data);
 			
 			$this->db->where('access_user_id', $userId);
-			$this->db->delete('ceb_access_permission');
+			$this->db->delete('access_permission');
 			
 			$i = 0;
 			
 				while($pagesList[$i]!="")
 				{
 					$data = array('access_user_id' => $userId,'access_status' => 1,'access_page_id' => $pagesList[$i]);
-					$this->db->insert('ceb_access_permission', $data);
+					$this->db->insert('access_permission', $data);
 					$i++;
 					if(!isset($pagesList[$i])){ break;}
 				}
 			$data = array('access_user_id' => $userId,'access_status' => 1,'access_page_id' => 1);
-			$this->db->insert('ceb_access_permission', $data);
+			$this->db->insert('access_permission', $data);
 			
 			if ($this->db->trans_status() === FALSE)
 		{
@@ -155,22 +155,22 @@ class UserModel extends  CI_Model {
 		$this->db->trans_begin();
 		
 		$data = array('system_user_name' => $userName,'system_user_password' => md5($userName),'system_user_full_name' => $fullName,'system_user_entered_by' => $this->session->userdata('user_id'),'system_user_date_time' => date("Y-m-d G:i:s"),'system_user_status' => 1);
-		$this->db->insert('ceb_system_users', $data);
+		$this->db->insert('system_users', $data);
 		$insert_id = $this->db->insert_id();
 		
 		$data_last	=	array('last_user_id'=>$insert_id,'last_session_id'=>"",'last_ip'=>"");
-		$this->db->insert('ceb_last_session',$data_last);
+		$this->db->insert('last_session',$data_last);
 		
 		$i = 0;
 		while($pagesList[$i]!="")
 		{
 			$data = array('access_user_id' => $insert_id,'access_status' => 1,'access_page_id' => $pagesList[$i]);
-			$this->db->insert('ceb_access_permission', $data);
+			$this->db->insert('access_permission', $data);
 			$i++;
 			if(!isset($pagesList[$i])){ break;}
 		}
 		$data = array('access_user_id' => $insert_id,'access_status' => 1,'access_page_id' => 1);
-		$this->db->insert('ceb_access_permission', $data);
+		$this->db->insert('access_permission', $data);
 			
 		if ($this->db->trans_status() === FALSE)
 		{
@@ -193,7 +193,7 @@ class UserModel extends  CI_Model {
 
 		$data = array('system_user_status' => $userStatus);
 		$this->db->where('system_user_id', $userId);
-		$this->db->update('ceb_system_users', $data); 
+		$this->db->update('system_users', $data); 
 		
 		if ($this->db->trans_status() === FALSE)
 		{
@@ -215,7 +215,7 @@ $this->db->close();
 
 		$data = array('system_user_password' => md5($userName));
 		$this->db->where('system_user_id', $userId);
-		$this->db->update('ceb_system_users', $data); 
+		$this->db->update('system_users', $data); 
 		
 		if ($this->db->trans_status() === FALSE)
 		{
@@ -233,8 +233,8 @@ $this->db->close();
 	public function editRecord($userId)
 	{		
 		$this->db->select('system_user_id, system_user_name, system_user_full_name');
-		$this->db->from('ceb_system_users');
-		//$this->db->join('ceb_area','area_id = system_user_area_id','inner');
+		$this->db->from('system_users');
+		//$this->db->join('area','area_id = system_user_area_id','inner');
 		$this->db->where('system_user_id', $userId);
 		$result = $this->db->get()->row();
 		return $result;
@@ -243,7 +243,7 @@ $this->db->close();
 	/*public function loadArea()
 	{
 		$this->db->select('distinct(area_code) As area_code ,area_description');
-		$this->db->from('ceb_area');
+		$this->db->from('area');
 		$this->db->where('area_status', 1);
 		$query=$this->db->get();
 	
@@ -260,7 +260,7 @@ $this->db->close();
 	{
 		
 		$this->db->select('area_id,area_sub_description');
-		$this->db->from('ceb_area');
+		$this->db->from('area');
 		$this->db->where('area_status', 1);
 		$this->db->where('area_code', $areaCode);
 		$query=$this->db->get();
@@ -278,7 +278,7 @@ $this->db->close();
 	public function getSubArea($areaCode)
 	{
 		$this->db->select('area_id,area_sub_description');
-		$this->db->from('ceb_area');
+		$this->db->from('area');
 		
 		$this->db->where('area_status', 1);
 		//$this->db->where('area_code', $areaCode);

@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'network_sd_wan',
+	'hostname' => '172.16.1.167',
+	'username' => 'admin',
+	'password' => 'password',
+	'database' => 'LOS',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -95,15 +95,21 @@ $db['default'] = array(
 	'save_queries' => FALSE
 );
 
-$db['customer_db'] = array(
+$db['oracle'] = array(
 	'dsn'	=> '',
-	//'hostname' => '//192.168.1.102',
-	'hostname' => 'localhost',
-
-	'username' => 'root',
-	'password' => '',
-	'database' => 'billingsystem',
-	'dbdriver' => 'mysqli',
+	'hostname' => '172.20.100.237',
+	'username' => 'eom_032024',
+	'password' => 'eom_03',
+	'database' => 'rdbpaw',
+	//'hostname' => '172.30.100.27',
+	//'username' => 'intdev',
+	//'password' => 'intdev',
+	//'database' => 'rdbdr',
+	//'hostname' => '172.20.100.12',
+	//'username' => 'intdev',
+	//'password' => 'intdev',
+	//'database' => 'RDBFIN',
+	'dbdriver' => 'oci8',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => FALSE,

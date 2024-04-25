@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://172.16.1.185/NW';
+$config['base_url'] = 'http://172.16.1.167/QR';
 
 /*
 |--------------------------------------------------------------------------

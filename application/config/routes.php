@@ -52,3 +52,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+// application/config/routes.php
+
+// application/config/routes.php
+
+$route['recon/upload'] = 'Excel_import/upload';
+
+
+
+

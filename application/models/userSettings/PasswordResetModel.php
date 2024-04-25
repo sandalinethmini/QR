@@ -13,7 +13,7 @@ class PasswordResetModel extends CI_Model
 			$this->db->trans_begin();
 			
 				$this->db->select('system_user_password');
-				$this->db->from('ceb_system_users');
+				$this->db->from('system_users');
 				$this->db->where('system_user_id', $userId);
 				$query	=	$this->db->get();
 				
@@ -25,7 +25,7 @@ class PasswordResetModel extends CI_Model
 					$this->db->set('system_user_password', md5($newPassword));
 					//$this->db->set('ba_password_error_count', 0);
 					//$this->db->set('ba_password_update_date', date("Y-m-d G:i:s",strtotime('-1:30')));
-					$this->db->update('ceb_system_users');
+					$this->db->update('system_users');
 					
 				}
 				else

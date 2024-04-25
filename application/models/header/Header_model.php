@@ -19,17 +19,12 @@ class Header_model extends CI_Model
 		
 		$home = true;
 		
-		$master_data			=	false;
-		$application			=	false;
-		$job_report				=	false;
-		$job_details			=	false;
-		$history_reports		=	false;
-		$officer_details		=	false;
-		$circuit_details		=	false;
-		$officer_detail_report	=	false;
-		$sdwan_details          =   false;
-		$sdwan_job_details      =   false;
-		$sdwan_job_report       =   false;
+		$administration			=	false;
+		$user_accounts			=	false;
+		$upload_file			=	false;
+		$account_search			=	false;
+		$download_status_file	=	false;
+		$password_reset 		= 	false;
 		
 		$reports	=	false;
 		
@@ -40,7 +35,7 @@ class Header_model extends CI_Model
 		
 		
 		$this->db->select('last_session_id,last_ip');
-		$query		=	$this->db->get_where('ceb_last_session',array('last_user_id'=>$user_id)); 
+		$query		=	$this->db->get_where('last_session',array('last_user_id'=>$user_id)); 
 		
 			$row = $query->row();					
 			$previous_session_id	=	$row->last_session_id;
@@ -49,96 +44,53 @@ class Header_model extends CI_Model
 		if($session_id==$previous_session_id)			
 		{
 			$this->db->trans_start();
-			$this->db->select('ceb_page_names.page_name');
-			$this->db->from('ceb_access_permission');
-			$where_array	=	array('ceb_page_names.page_status' => 1, 'ceb_access_permission.access_status' => 1, 'ceb_access_permission.access_user_id' => $user_id);
+			$this->db->select('page_names.page_name');
+			$this->db->from('access_permission');
+			$where_array	=	array('page_names.page_status' => 1, 'access_permission.access_status' => 1, 'access_permission.access_user_id' => $user_id);
 			$this->db->where($where_array);
-			$this->db->join('ceb_page_names','ceb_access_permission.access_page_id = ceb_page_names.page_id','inner');
+			$this->db->join('page_names','access_permission.access_page_id =  page_names.page_id','inner');
 			$query		=	$this->db->get();  
 				
 			foreach($query->result_array() as $row)
 				{	
-					if ($row["page_name"] == "user_details")
+					if ($row["page_name"] == "user_accounts")
 						{
-							$master_data	=	true;
-							$user_details	=	true;				
+							$administration	=	true;
+							$user_accounts	=	true;				
 						}
 					
 					////////////////////////// Application
 					
-					if ($row["page_name"] == "application")
+					if ($row["page_name"] == "upload_file")
 						{
-							$application	=	true;			
+							$upload_file	=	true;			
 						}
 					
-					if ($row["page_name"] == "password_reset") 
+					if ($row["page_name"] == "account_search") 
 						{
-							$password_reset	=	true;			
+							$account_search	=	true;			
 						}
 					
-					if ($row["page_name"] == "job_report")
+					if ($row["page_name"] == "download_status_file")
 						{
-							$job_report	=	true;	
-							$reports	=	true;		
+							$download_status_file	=	true;	
+						}
+					if ($row["page_name"] == "password_reset")
+						{
+							$password_reset	=	true;	
 						}
 					
-					if ($row["page_name"] == "job_details") 
-						{
-							$job_details	=	true;			
-						}
-						
-					if ($row["page_name"] == "history_reports") 
-						{
-							$history_reports	=	true;
-							$reports	=	true;			
-						}
-						
-					if ($row["page_name"] == "officer_details") 
-						{
-							$officer_details	=	true;			
-						}
-						
-					if ($row["page_name"] == "circuit_details") 
-						{
-							$circuit_details	=	true;			
-						}
-					if ($row["page_name"] == "officer_detail_report") 
-						{
-							$officer_detail_report	=	true;	
-							$reports	=	true;		
-						}
-						
-					if ($row["page_name"] == "sdwan_details") 
-					{
-						$sdwan_details	=	true;		
-					}
-					if ($row["page_name"] == "sdwan_job_details") 
-					{
-						$sdwan_job_details	=	true;		
-					}
-					if ($row["page_name"] == "sdwan_job_report") 
-					{
-						$sdwan_job_report	=	true;	
-						$reports	=	true;		
-					}
+					
 										
 			}
 									
 			$data	=	array(	
-				'master_data'=>$master_data, 
-				'application'=>$application, 
-				'user_details'=>$user_details,
+				'administration'=>$administration, 
+				'user_accounts'=>$user_accounts, 
+				'upload_file'=>$upload_file,
+				'account_search'=>$account_search,
+				'download_status_file'=>$download_status_file,
 				'password_reset'=>$password_reset,
-				'job_report'=>$job_report,
-				'job_details'=>$job_details,
-				'history_reports'=>$history_reports,
-				'officer_details'=>$officer_details,
-				'circuit_details'=>$circuit_details,
-				'officer_detail_report'=>$officer_detail_report,
-				'reports'=>$reports,
-				'sdwan_details'=>$sdwan_details,
-				'sdwan_job_details'=>$sdwan_job_details,
-				'sdwan_job_report'=>$sdwan_job_report
 			);		
 				
 			$this->db->trans_complete();					
@@ -160,7 +112,7 @@ class Header_model extends CI_Model
 		
 			$this->db->trans_start();
 			$this->db->select('access_id');
-			$this->db->from('ceb_access_permission');
+			$this->db->from('access_permission');
 			$this->db->where('access_page_id',$pageId);
 			$this->db->where('access_user_id',$user_id);
 			
